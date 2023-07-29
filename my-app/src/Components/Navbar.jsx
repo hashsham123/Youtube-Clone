@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Upload from './Upload';
+import LogoutButton from "./Logout";
 
 const Container = styled.div`
   position: sticky;
@@ -87,7 +88,8 @@ const Navbar = () => {
       <VideoCallIcon onClick={()=>setOpen(true)}/>
       <Avatar />
       {currentUser.name}
-     </User>):<Link to="signin" style={{textDecoration:"none"}}>
+      <LogoutButton/>
+     </User> ):<Link to="signin" style={{textDecoration:"none"}}>
         <Button>
             <AccountCircleOutlinedIcon />
             SIGN IN

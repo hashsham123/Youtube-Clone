@@ -116,10 +116,12 @@ const VideoFrame = styled.video`
   object-fit: cover;
 `;
 
+
 const Video = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const { currentVideo } = useSelector((state) => state.video);
+  const { currentVideo, loading } = useSelector((state) => state.video); // Include 'loading' in the useSelector
   const dispatch = useDispatch();
+
 
   const path = useLocation().pathname.split("/")[2];
 
@@ -129,12 +131,12 @@ const Video = () => {
     const fetchData = async () => {
       try {
         const videoRes = await axios.get(`/video/find/${path}`);
-        const channelRes = await axios.get(
-          `/users/find/${videoRes.data.userId}`
-        );
+        const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`);
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     fetchData();
   }, [path, dispatch]);
@@ -154,9 +156,9 @@ const Video = () => {
       : await axios.put(`/users/sub/${channel._id}`);
     dispatch(subscription(channel._id));
   };
-
-  //TODO: DELETE VIDEO FUNCTIONALITY
-
+  if (loading || !currentVideo) {
+    return <div>Loading...</div>; // You can display a loading indicator or a message here
+  }
   return (
     <Container>
       <Content>

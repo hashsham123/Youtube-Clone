@@ -50,7 +50,9 @@ font-size: 14px;
 color: ${({theme})=>theme.textSoft};
 `;
 
-const Card = ({type,video}) => {
+const Card = ({ type, video }) => {
+
+
   const [channel,setChannel] = useState([]);
   useEffect(()=>{
     const fetchChannel = async()=>{

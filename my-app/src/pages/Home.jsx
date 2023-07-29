@@ -8,16 +8,22 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const Home = ({type}) => {
-  const [videos,setVideos] = useState([]);
-  useEffect(()=>{
-    const fetchVideos = async()=>{
-
-      const res =await axios.get(`video/${type}`);
-      setVideos(res.data);
-    }
+const Home = ({ type }) => {
+  const [videos, setVideos] = useState([]);
+  
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const res = await axios.get(`video/${type}`);
+        setVideos(res.data);
+      } catch (err) {
+        console.error('Error fetching videos:', err);
+      }
+    };
     fetchVideos();
-  },[type]);
+  }, [type]);
+
+  console.log(videos);
   return (
     <Container>
       {videos.map(video=>(

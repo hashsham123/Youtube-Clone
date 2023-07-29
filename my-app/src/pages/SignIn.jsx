@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components';
-import { useState } from 'react';
-import axios from "axios";
-import { useDispatch } from 'react-redux';
-import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
+ import React from 'react'
+ import styled from 'styled-components';
+ import { useState } from 'react';
+ import axios from "axios";
+ import { useDispatch } from 'react-redux';
+ import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
 const Container = styled.div`
 display:flex;
 flex-direction: column;
@@ -87,7 +87,18 @@ const SignIn = () => {
   }
   }
 
-  
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    dispatch(loginStart());
+
+    try {
+      const res = await axios.post("/auth/signup", { name, email, password });
+      dispatch(loginSuccess(res.data));
+      console.log(res.data);
+    } catch (err) {
+      dispatch(loginFailure());
+    }
+  }
   return (
     <Container>
         <Wrapper>
@@ -103,13 +114,13 @@ const SignIn = () => {
             Sign in 
            </Button>
            <Title>or</Title>
-           <Input placeholder="username" onChange={e=>setName(e.target.value)}/>
-           <Input placeholder="email" onChange={e=>setEmail(e.target.value)}/>
-
-            <Input type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}/>
-            <Button>
-            Sign up 
-           </Button>
+           
+           <Input placeholder="username" onChange={e => setName(e.target.value)} />
+        <Input placeholder="email" onChange={e => setEmail(e.target.value)} />
+        <Input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
+        <Button onClick={handleSignUp}>
+          Sign up
+        </Button>
         </Wrapper>
         <More>
             English(USA)
@@ -124,3 +135,5 @@ const SignIn = () => {
 }
 
 export default SignIn
+
+
