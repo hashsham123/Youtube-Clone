@@ -33,7 +33,7 @@ app.use((err,req,res,next)=>{
     message,
   })
 })
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
 app.use(express.json());
 
