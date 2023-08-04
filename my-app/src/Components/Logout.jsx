@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/userSlice';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Button = styled.button`
 border-radius: 3px;
@@ -23,9 +24,9 @@ const LogoutButton = () => {
     };
   
     return (
-      <Button onClick={handleLogout}>
-        Logout
-      </Button>
+      <Link to="/signin" style={{ textDecoration: 'none' }}>
+      <Button onClick={handleLogout}>Logout</Button>
+    </Link>
     );
   };
   

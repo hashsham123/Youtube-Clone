@@ -25,34 +25,33 @@ export const videoSlice = createSlice({
       state.error = true;
     },
     like: (state, action) => {
-      if (state.currentVideo && Array.isArray(state.currentVideo.likes)) {
-        if (!state.currentVideo.likes.includes(action.payload)) {
-          state.currentVideo.likes.push(action.payload);
-          const dislikeIndex = state.currentVideo.dislikes.findIndex(
-            (userId) => userId === action.payload
-          );
+      const video = state.currentVideo;
+      if (video && Array.isArray(video.likes)) {
+        const { payload } = action;
+        if (!video.likes.includes(payload)) {
+          video.likes.push(payload);
+          const dislikeIndex = video.dislikes.findIndex((userId) => userId === payload);
           if (dislikeIndex !== -1) {
-            state.currentVideo.dislikes.splice(dislikeIndex, 1);
+            video.dislikes.splice(dislikeIndex, 1);
           }
         }
       }
     },
     dislike: (state, action) => {
-      if (state.currentVideo && Array.isArray(state.currentVideo.dislikes)) {
-        if (!state.currentVideo.dislikes.includes(action.payload)) {
-          state.currentVideo.dislikes.push(action.payload);
-          const likeIndex = state.currentVideo.likes.findIndex(
-            (userId) => userId === action.payload
-          );
+      const video = state.currentVideo;
+      if (video && Array.isArray(video.dislikes)) {
+        const { payload } = action;
+        if (!video.dislikes.includes(payload)) {
+          video.dislikes.push(payload);
+          const likeIndex = video.likes.findIndex((userId) => userId === payload);
           if (likeIndex !== -1) {
-            state.currentVideo.likes.splice(likeIndex, 1);
+            video.likes.splice(likeIndex, 1);
           }
         }
       }
     },
   },
 });
-
 
 export const { fetchStart, fetchSuccess, fetchFailure, like, dislike } =
   videoSlice.actions;

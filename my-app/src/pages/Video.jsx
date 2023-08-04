@@ -150,15 +150,24 @@ const Video = () => {
     dispatch(dislike(currentUser._id));
   };
 
-  const handleSub = async () => {
-    currentUser.subscribedUsers.includes(channel._id)
-      ? await axios.put(`/users/unsub/${channel._id}`)
-      : await axios.put(`/users/sub/${channel._id}`);
-    dispatch(subscription(channel._id));
-  };
+ 
+    const handleSub = async () => {
+      if (currentUser?.subscribedUsers) { // Use optional chaining to handle null
+        const channelId = channel._id;
+        if (currentUser.subscribedUsers.includes(channelId)) {
+          await axios.put(`/users/unsub/${channelId}`);
+        } else {
+          await axios.put(`/users/sub/${channelId}`);
+        }
+        dispatch(subscription(channelId));
+      }
+    };
+  
+  
   if (loading || !currentVideo) {
-    return <div>Loading...</div>; // You can display a loading indicator or a message here
+    return <div>Loading...</div>;
   }
+
   return (
     <Container>
       <Content>

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import Upload from './Upload';
 import LogoutButton from "./Logout";
 
+
 const Container = styled.div`
   position: sticky;
   top: 0;
@@ -76,6 +77,7 @@ background-color: aliceblue;
 const Navbar = () => {
   const [open,setOpen] = useState(false)
   const {currentUser} = useSelector(state => state.user);
+  
   return (
     <>
     <Container>
@@ -88,7 +90,7 @@ const Navbar = () => {
       <VideoCallIcon onClick={()=>setOpen(true)}/>
       <Avatar />
       {currentUser.name}
-      <LogoutButton/>
+      <LogoutButton onClick/>
      </User> ):<Link to="signin" style={{textDecoration:"none"}}>
         <Button>
             <AccountCircleOutlinedIcon />
